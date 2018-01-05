@@ -1,0 +1,223 @@
+{% extends 'index/base.html' %}
+
+{% block body %}
+    {% load staticfiles %}
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <div class="container-fluid manip_container">
+
+        <div class="row">
+            <div class="col-4 sides sides-left">
+
+                <h4>{{ fileName }}</h4>
+                <br>
+
+                <form method="post" action="{% url 'index_page:manip' %}">
+                    {% csrf_token %}
+
+                    <h5>Tracer des graphes: </h5>
+                    <br>
+
+                    <input type="hidden" name="file_id" value="{{ last_f }}">
+
+                    <div class="form-group row">
+                        <label for="list_graph" class="col-sm-2 col-form-label">Graphs: </label>
+                        <div class="col-sm-10">
+                            <select name="list_graph" class="custom-select mb-2 mr-sm-2 mb-sm-0" id="list_graph">
+                                <option selected>Choisir...</option>
+                                <option value="bar">Bar</option>
+                                <option value="c_bar">Compare Bare</option>
+                                <option value="hist">Histogram</option>
+                                <option value="pie">Pie</option>
+                                <option value="c_pie">Compare Pie</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="list_vars" class="col-sm-2 col-form-label">Variables</label>
+                        <div class="col-sm-10">
+                            <select name="list_vars" multiple class="form-control mb-2 mr-sm-2 mb-sm-0" id="list_vars">
+                                {% for v in list_vars %}
+                                    <option value="{{ v }}">{{ v }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button class="btn btn-success btn-sm">Tracer le graphe</button>
+                        </div>
+                    </div>
+
+                </form>
+
+                <br>
+                <hr>
+
+                <form method="post" action="{% url 'index_page:IC_test' %}">
+                    {% csrf_token %}
+
+                    <h5>Intervalle de confiance: </h5>
+                    <br>
+
+                    <input type="hidden" name="file_id" value="{{ last_f }}">
+
+                    <div class="form-group row">
+                        <label for="list_vars" class="col-sm-3 col-form-label">Variables: </label>
+                        <div class="col-sm-9">
+                            <select name="list_vars" class="form-control custom-select mb-2 mr-sm-2 mb-sm-0"
+                                    id="list_vars">
+                                {% for v in list_vars %}
+                                    <option value="{{ v }}">{{ v }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="param" class="col-sm-3 col-form-label">Parametre: </label>
+                        <div class="col-sm-9">
+                            <select name="param" class="custom-select mb-2 mr-sm-2 mb-sm-0" id="param">
+                                <option selected>Choisir...</option>
+                                <option value="moy">Moyenne</option>
+                                <option value="vari">Variance</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="alpha" class="col-sm-3 col-form-label">Alpha: </label>
+                        <div class="col-sm-9">
+                            <select name="alpha" class="custom-select mb-2 mr-sm-2 mb-sm-0" id="alpha">
+                                <option selected>Choisir...</option>
+                                <option value="0.01">1%</option>
+                                <option value="0.05">5%</option>
+                                <option value="0.1">10%</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button class="btn btn-success btn-sm">Calculer l'IC</button>
+                        </div>
+                    </div>
+
+                </form>
+
+                <br>
+                <hr>
+
+                <form method="post" action="{% url 'index_page:Hypo' %}">
+                    {% csrf_token %}
+
+                    <h5>Test d'hypothèse: </h5>
+                    <br>
+
+                    <input type="hidden" name="file_id" value="{{ last_f }}">
+
+                    <div class="form-group row">
+                        <label for="list_vars" class="col-sm-3 col-form-label">Variables: </label>
+                        <div class="col-sm-9">
+                            <select name="list_vars" class="form-control custom-select mb-2 mr-sm-2 mb-sm-0"
+                                    id="list_vars">
+                                {% for v in list_vars %}
+                                    <option value="{{ v }}">{{ v }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="param" class="col-sm-3 col-form-label">Parametre: </label>
+                        <div class="col-sm-9">
+                            <select name="param" class="custom-select mb-3 mr-sm-3 mb-sm-0" id="param">
+                                <option selected>Choisir...</option>
+                                <option value="norm">Normal</option>
+                                <option value="std">Student</option>
+                                <option value="khi2">Khi-deux</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="alter" class="col-sm-3 col-form-label">Alternative: </label>
+                        <div class="col-sm-9">
+                            <select name="alter" class="custom-select mb-3 mr-sm-3 mb-sm-0" id="alter">
+                                <option selected>Choisir...</option>
+                                <option value="g">Gauche</option>
+                                <option value="d">Droite</option>
+                                <option value="b">Bilateral</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button class="btn btn-success btn-sm">Executer</button>
+                        </div>
+                    </div>
+
+                </form>
+
+
+            </div>
+
+            <div class="col-8 offset-4 sides sides-right">
+
+                <div class="plot_display">
+                    <div>
+                        {{ divs|safe }}
+                    </div>
+                    <br>
+                    <div class="card card-inverse card-info">
+                        <div class="card-block">
+                            <p class="card-text" style="color: white;">
+                                {{ divs2 }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <br><br><br>
+
+                <button type="button" class="btn btn-secondary affiche_desc" data-toggle="tooltip" data-placement="top"
+                        title="Sommaire des fonction sur les variables">
+                    <span class="span" style="display: none;">Masquer</span><span class="span">Afficher</span> le
+                    tableau descriptif
+                </button>
+                <br>
+                <br>
+                <div class="affiche_desc_table dataset-display" style="display: none;">
+                    {% include describe_path %}
+                </div>
+
+
+                <button type="button" class="btn btn-secondary affiche_table">
+                    <span class="span" style="display: none;">Masquer</span><span class="span">Afficher</span> la
+                    dataset
+                </button>
+                <br>
+                <br>
+                <div class="affiche_all_table dataset-display" style="display: none;">
+                    {% include file_to_path %}
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}
+
+{% block jsfiles %}
+    <script src="{% static 'index/js.js' %}"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+{% endblock %}

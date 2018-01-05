@@ -1,0 +1,122 @@
+html, body {
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+}
+
+*:focus, *:active, *:hover {
+    outline: transparent;
+}
+
+.my-nav {
+    background-color: #fafafa;
+}
+
+.navbar-brand {
+    font-family: "Satisfy", cursive;
+}
+
+.container-upload {
+    margin: 116px 0;
+}
+
+.container-upload > .row {
+    margin: 30px 0;
+}
+
+.container-fileType {
+    font-size: 1.6rem;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.container-options {
+    background-color: #1f1f1f;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.26);
+    color: #e6e6e6;
+    font-size: 1.3rem;
+    margin: 30px 0;
+    padding: 65px 0 50px;
+    text-align: center;
+}
+
+.options {
+    text-transform: capitalize;
+    text-align: left;
+}
+
+.options .form-check {
+    font-weight: 200;
+}
+
+.options .heading {
+    color: #fdfdfd;
+    display: inline-block;
+    font-size: 1.8rem;
+    font-weight: 500;
+}
+
+.container-charts {
+    margin: 70px 0;
+}
+
+.container-charts > div {
+    text-align: center;
+}
+
+.charts {
+    display: inline-block;
+    margin: 10px 20px;
+    text-align: center;
+}
+
+.charts img {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.26);
+    width: 490px;
+}
+
+.execute-btn {
+    margin-bottom: 8px;
+    margin-top: 26px;
+}
+
+.execute-btn button {
+    font-weight: 600;
+}
+
+.dataset-display {
+    border: 4px solid #444;
+    height: 350px;
+    overflow: scroll;
+    padding: 20px 17px;
+    width: 100%;
+}
+
+.plot_display {
+    width: 100%;
+}
+
+.plot_display > div, .plot_display > div > div {
+    width: 100% !important;
+}
+
+.plot_display .main-svg, .svg-container {
+    width: 100% !important;
+}
+
+.sides {
+    margin-top: 56px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    height: 100%;
+}
+
+.sides-left {
+    background-color: #f2f2f2;
+    height: 91%;
+    overflow-y: scroll;
+    position: fixed;
+}
